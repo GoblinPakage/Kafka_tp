@@ -5,7 +5,6 @@ import com.typesafe.scalalogging.Logger
 import org.apache.kafka.clients.producer._
 
 import java.util.Properties
-import scala.Predef.Ensuring
 
 object KafkaProducerService {
   val logger = Logger(this.getClass)
