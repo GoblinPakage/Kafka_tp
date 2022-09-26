@@ -66,14 +66,22 @@ docker-compose run my-scala-app bash
 Your ops team tells your app is slow and the CPU is not used much, they were hoping to help you but they are not Kafka experts.
 
 * [ ] Look at the method `producer.flush()`, can you improve the speed of the program ? 
+    Yes we can improve the programe just by removing the final part with the method `producer.flush()`
+    ` producer.flush()`
 * [ ] What about batching the messages ? [Help](https://www.conduktor.io/kafka/kafka-producer-batching)
+    By introducing some lag (for example linger.ms=20), we increase the chances of messages being sent together in a batch. So at the expense of introducing a small delay, we can increase the throughput, compression, and efficiency of our producer.
 
 ##### Question 2
 Your friendly ops team warns you about kafka disks starting to be full. What can you do ?
 
 Tips : 
-* [ ] What about [messages compression](https://kafka.apache.org/documentation/#producerconfigs_compression.type) ? Can you implement it ? [You heard that snappy compression is great.](https://www.conduktor.io/kafka/producer-default-partitioner-and-sticky-partitioner)
+* [ ] What about [messages compression](https://kafka.apache.org/documentation/#producerconfigs_compression.type) ? Can you implement it ? 
+    Yes 
+
+[You heard that snappy compression is great.](https://www.conduktor.io/kafka/producer-default-partitioner-and-sticky-partitioner)
+
 * [ ] What about [messages lifetime](https://kafka.apache.org/documentation/#topicconfigs_delete.retention.ms) on your kafka brokers ? Can you change your topic config ?
+
 
 ##### Question 3
 After a while and a lot of deployments and autoscaling (adding and removing due to traffic spikes), on your data quality dashboard you are seeing some messages are duplicates or missing. What can you do ?
@@ -113,10 +121,21 @@ Look at :
 
 ##### Questions
 * [ ] What are the benefits to use a Schema Registry for messages ? [Help](https://docs.confluent.io/platform/current/schema-registry/index.html)
+    Confluent Schema Registry provides a serving layer for your metadata. It provides a RESTful interface for storing and retrieving your Avro®, JSON Schema, and Protobuf schemas.
+
 * [ ] Where are stored schemas information ?
+    Schema Registry lives outside of and separately from your Kafka brokers.
+
 * [ ] What is serialization ? [Help](https://developer.confluent.io/learn-kafka/kafka-streams/serialization/#serialization)
+    Serialization is a general term that covers deserializing and serializing.
+        When you push an array of bytes through a deserializer, it gives you an object on the other end.
+        A serializer is just the opposite—you give it an object, and it returns an array of bytes
+
 * [ ] What serialization format are supported ? [Help](https://docs.confluent.io/platform/current/schema-registry/index.html#avro-json-and-protobuf-supported-formats-and-extensibility)
+    Avro, JSON, and Protobuf Supported Formats
+
 * [ ] Why is the Avro format so compact ? [Help](https://docs.confluent.io/platform/current/schema-registry/index.html#ak-serializers-and-deserializers-background)
+
 * [ ] What are the best practices to run a Schema Registry in production ? [Help1](https://docs.confluent.io/platform/current/schema-registry/index.html#sr-high-availability-single-primary) and [Help2](https://docs.confluent.io/platform/current/schema-registry/installation/deployment.html#running-sr-in-production)
 
 ##### Code

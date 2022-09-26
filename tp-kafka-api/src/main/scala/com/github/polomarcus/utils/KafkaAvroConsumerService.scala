@@ -22,7 +22,7 @@ object KafkaAvroConsumerService {
   val stringDeserializer = "org.apache.kafka.common.serialization.StringDeserializer"
   val kafkaAvroDeserializer = "io.confluent.kafka.serializers.KafkaAvroDeserializer"
   props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,stringDeserializer)
-
+// |Deserialized Value (Class): title ${deserializedValue.title } media ${deserializedValue.media }
   // We want to serialize the value of a News object here : i.e. do a custom serialization (@see readme)
   props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, kafkaAvroDeserializer)
   props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, ConfService.SCHEMA_REGISTRY)
@@ -62,7 +62,7 @@ object KafkaAvroConsumerService {
               s"""Consumed :
                  |Offset : ${record.offset()} from partition ${record.partition()}
                  |Unserialized value (raw) : ${record.value()}
-                 |Deserialized Value (Class): title ${deserializedValue.title } media ${deserializedValue.media }
+                
                  |Key : ${record.key()}
                  |""".stripMargin)
           })
